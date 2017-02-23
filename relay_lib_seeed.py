@@ -93,7 +93,10 @@ def get_port_status(relay_num):
     print('Checking port status:', relay_num)
     # do we have a valid port?
     if 0 < relay_num <= NUM_RELAY_PORTS:
-        # Then return the bit value
+        # read the memory location
+        DEVICE_REG_DATA = bus.read_byte_data(DEVICE_ADDRESS, DEVICE_REG_MODE1)
+        print("byte:", DEVICE_REG_DATA)
+        # return the specified bit status
         return (DEVICE_REG_DATA & (1 << relay_num)) != 0
     else:
         # otherwise (invalid port), always return False
