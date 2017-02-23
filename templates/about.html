@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    {{ super() }}
+    {#  footer code shamelessly stolen from http://getbootstrap.com/examples/sticky-footer-navbar/  #}
+    <link href="{{ url_for('static', filename='css/bootstrap-toggle.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/bootstrap-toggle.min.js') }}"></script>
+{% endblock %}
+
+{% block title %}Pi Relay Controller (Seeed){% endblock %}
+
+{% block page_content %}
+    <div class="page-header">
+        <h1>About</h1>
+    </div>
+    <p>Bacon ipsum dolor amet tri-tip pig ball tip corned beef jowl short loin. Meatball cupim brisket chuck picanha
+        capicola meatloaf, leberkas bresaola flank jerky. Corned beef ribeye burgdoggen pork belly tail, cupim venison
+        beef ribs leberkas ground round. Capicola chuck biltong venison cupim.</p>
+    <p>Porchetta beef boudin ball tip turducken, brisket flank shank pastrami tenderloin kevin burgdoggen pork belly
+        pig. Doner picanha leberkas, strip steak prosciutto pork loin venison short ribs short loin corned beef
+        porchetta alcatra filet mignon shoulder. Shankle corned beef kielbasa salami doner flank frankfurter
+        bresaola strip steak cupim ham hock.</p>
+{% endblock %}
