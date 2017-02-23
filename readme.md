@@ -15,12 +15,31 @@ This project uses the following hardware:
 
 ![Assembly](screenshots/figure-01.png)
 
-## Software Implementation
 
-### Configuring Your Raspberry Pi
+## Configuring Your Raspberry Pi
+
+
+![Assembly](screenshots/figure-02.png)
+
+![Assembly](screenshots/figure-03.png)
+
+### Validating Assembly
 
 Update the JMW Article with this content: http://raspberrypi.stackexchange.com/questions/56413/error-problem-connecting-to-raspberry-pi-3-with-xrdp
 
+this.
+
+![I2Cdetect](screenshots/figure-04.png)
+
+this. 
+
+![Seeed Studio Test Application](screenshots/figure-05.png)
+
+this.
+
+![Python Library test application](screenshots/figure-06.png)
+
+## Software Installation
 
 
 ## Resources
