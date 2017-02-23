@@ -1,39 +1,32 @@
-# Raspberry Pi Relay Controller
+# Raspberry Pi Relay Controller (Seeed)
 
 ## Introduction
 
-## Hardware
+
+## Hardware Components
 
 This project uses the following hardware:
 
 + Raspberry Pi
-+ ModMyPy Relay Board
++ Seeed Studio Raspberry Pi Relay Board
 + 5V Micro USB power source (smartphone charger)
  
-If you're controlling 110v electrical circuits:
-
-+ Box
-+ Cover
-+ Outlets
-+ Pigtail
-+ Enclosure
-
-
 ## Assembly
 
+![Assembly](screenshots/figure-01.png)
 
 ## Software Implementation
+
+### Configuring Your Raspberry Pi
+
+Update the JMW Article with this content: http://raspberrypi.stackexchange.com/questions/56413/error-problem-connecting-to-raspberry-pi-3-with-xrdp
+
 
 
 ## Resources
 
-https://www.modmypi.com/raspberry-pi/breakout-boards/modmypi/modmypi-piot-relay-board
+Links to the wiki page and my article and sample code
 
-https://github.com/modmypi/PiOT-Relay-Board/wiki
-https://github.com/modmypi/PiOT-Relay-Board/wiki/Installation
-Installing the header: https://github.com/modmypi/PiOT-Relay-Board/wiki/Inserting-PiOT-Relay-Header
-
-https://github.com/modmypi/PiOT-Relay-Board
 
 ## Update History
 
