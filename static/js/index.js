@@ -1,10 +1,66 @@
-//todo: set click listeners for the different buttons on the page
+function setRelay(relay, status) {
+    console.log("Executing setRelay");
+    var url = status ? 'on/' : 'off/';
+    callApiWithRelay(url, relay);
+}
 
-(function () {
+function toggleRelay(relay) {
+    console.log("Executing toggleRelay");
+    callApiWithRelay('toggle/', relay);
+}
 
-    $(document).ready(function () {
-        //set click listeners
+function callApiWithRelay(url, relay) {
+    console.log("Executing callApiWithRelay");
+    if (relay > 0 && relay < 5) {
+        url += relay;
+        callApi(url);
+    } else {
+        console.error("Invalid port");
+        swal({
+            title: "Pi Relay Controller",
+            text: "Invalid relay port passed to function setRelay",
+            type: "error"
+        });
+    }
+}
 
+function toggleAll(status) {
+    console.log("Executing toggleAll");
+    var url = status ? 'all_on/' : 'all_off/';
+    callApi(url);
+}
+
+function callApi(url) {
+    console.log("Executing callApi");
+    $.get(url, function () {
+        console.log("Sent request to server");
+    }).done(function () {
+        console.log("Completed request");
+    }).fail(function () {
+        console.error("Relay status failure");
+        swal({
+            title: "Pi Relay Controller",
+            text: "Server returned an error",
+            type: "error"
+        });
     });
+}
 
-}());
+function getRelayStatus(relay) {
+    console.log("Executing getRelayStatus");
+    $.get('status/' + relay, function () {
+        console.log("Sent request to server");
+    }).done(function (res) {
+        console.log("Completed request");
+        var msg = (parseInt(res) > 0) ? "ON" : "OFF"
+        msg = "Relay " + relay + " is " + msg;
+        swal(msg);
+    }).fail(function () {
+        console.error("Relay status failure");
+        swal({
+            title: "Pi Relay Controller",
+            text: "Server returned an error",
+            type: "error"
+        });
+    });
+}

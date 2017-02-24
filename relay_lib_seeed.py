@@ -80,24 +80,42 @@ def relay_all_off():
 
 
 def relay_toggle_port(relay_num):
-    print('Toggling port:', relay_num)
-    if get_port_status(relay_num):
-        relay_on(relay_num)
-    else:
+    print('Toggling relay:', relay_num)
+    if relay_get_port_status(relay_num):
+        # it's on, so turn it off
         relay_off(relay_num)
+    else:
+        # it's off, so turn it on
+        relay_on(relay_num)
 
 
-def get_port_status(relay_num):
+def relay_get_port_status(relay_num):
+    # determines whether the specified port is ON/OFF
     global DEVICE_REG_DATA
+    print('Checking status of relay', relay_num)
+    res = relay_get_port_data(relay_num)
+    if res > 0:
+        mask = 1 << (relay_num - 1)
+        # return the specified bit status
+        # return (DEVICE_REG_DATA & mask) != 0
+        return (DEVICE_REG_DATA & mask) == 0
+    else:
+        # otherwise (invalid port), always return False
+        print("Specified relay port is invalid")
+        return False
 
-    print('Checking port status:', relay_num)
+
+def relay_get_port_data(relay_num):
+    # gets the current byte value stored in the relay board
+    global DEVICE_REG_DATA
+    print('Reading relay status value for relay', relay_num)
     # do we have a valid port?
     if 0 < relay_num <= NUM_RELAY_PORTS:
         # read the memory location
         DEVICE_REG_DATA = bus.read_byte_data(DEVICE_ADDRESS, DEVICE_REG_MODE1)
-        print("byte:", DEVICE_REG_DATA)
         # return the specified bit status
-        return (DEVICE_REG_DATA & (1 << relay_num)) != 0
+        return DEVICE_REG_DATA
     else:
-        # otherwise (invalid port), always return False
-        return False
+        # otherwise (invalid port), always return 0
+        print("Specified relay port is invalid")
+        return 0

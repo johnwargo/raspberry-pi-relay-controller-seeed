@@ -1,14 +1,9 @@
 {% extends 'base.html' %}
 
-{% block head %}
-    {{ super() }}
-    {#  footer code shamelessly stolen from http://getbootstrap.com/examples/sticky-footer-navbar/  #}
-    <link href="{{ url_for('static', filename='css/bootstrap-toggle.min.css') }}" rel="stylesheet">
-{% endblock %}
-
 {% block scripts %}
     {{ super() }}
-    <script src="{{ url_for('static', filename='js/bootstrap-toggle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <link href="{{ url_for('static', filename='css/sweetalert2.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block title %}Pi Relay Controller (Seeed){% endblock %}
@@ -17,81 +12,80 @@
     <div class="page-header">
         <h1>Controller</h1>
     </div>
-    <p>Bacon ipsum dolor amet tri-tip pig ball tip corned beef jowl short loin. Meatball cupim brisket chuck picanha
-        capicola meatloaf, leberkas bresaola flank jerky. Corned beef ribeye burgdoggen pork belly tail, cupim venison
-        beef ribs leberkas ground round. Capicola chuck biltong venison cupim.</p>
+    <p>Use the buttons below to set/toggle the status of the relay board's relays. You can set a specific relay on or
+        off by tapping the On and Off buttons for a particular relay. The Toggle button flips the status of the selected
+        relay. The All On and All Off buttons set all of the relays simultaneously.</p>
     <div class="container">
-        <div class="row">
-            <div class="col-xs-1">1</div>
-            <div class="col-xs-3">
-                <button type="button" class="btn btn-success" id="on-1">On</button>
-            </div>
-            <div class="col-xs-3">
-                <button type="button" class="btn btn-danger" id="off-1">Off</button>
-            </div>
-            <div class="col-xs-3">
-                <button type="button" class="btn btn-info" id="toggle-1">Toggle</button>
-            </div>
-            <div class="col-xs-2">
-                <input type="checkbox" checked data-toggle="toggle" id="status-1" readonly>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-1">2</div>
-            <div class="col-xs-3">
-                <button type="button" class="btn btn-success" id="on-2">On</button>
-            </div>
-            <div class="col-xs-3">
-                <button type="button" class="btn btn-danger" id="off-2">Off</button>
-            </div>
-            <div class="col-xs-3">
-                <button type="button" class="btn btn-info" id="toggle-2">Toggle</button>
-            </div>
-            <div class="col-xs-2">
-                <input type="checkbox" checked data-toggle="toggle" id="status-2" readonly>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-1">3</div>
-            <div class="col-xs-3">
-                <button type="button" class="btn btn-success" id="on-3">On</button>
-            </div>
-            <div class="col-xs-3">
-                <button type="button" class="btn btn-danger" id="off-3">Off</button>
-            </div>
-            <div class="col-xs-3">
-                <button type="button" class="btn btn-info" id="toggle-3">Toggle</button>
-            </div>
-            <div class="col-xs-2">
-                <input type="checkbox" checked data-toggle="toggle" id="status-3" readonly>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-1">4</div>
-            <div class="col-xs-3">
-                <button type="button" class="btn btn-success" id="on-4">On</button>
-            </div>
-            <div class="col-xs-3">
-                <button type="button" class="btn btn-danger" id="off-4">Off</button>
-            </div>
-            <div class="col-xs-3">
-                <button type="button" class="btn btn-info" id="toggle-4">Toggle</button>
-            </div>
-            <div class="col-xs-2">
-                <input type="checkbox" checked data-toggle="toggle" id="status-4" readonly>
-            </div>
-        </div>
-     <div class="row">
-            <div class="col-xs-6">
-                <button type="button" class="btn btn-success" id="all_on">All On</button>
-            </div>
-            <div class="col-xs-6">
-                <button type="button" class="btn btn-danger" id="all_off">All Off</button>
-            </div>
-        </div>
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th scope="row">Relay 1</th>
+                <td>
+                    <div class="btn-group-lg" role="group" aria-label="Relay 1">
+                        <button type="button" class="btn btn-success" id="on-1" onclick="setRelay(1, true);">On</button>
+                        <button type="button" class="btn btn-danger" id="off-1" onclick="setRelay(1, false);">Off
+                        </button>
+                        <button type="button" class="btn btn-info" id="toggle-1" onclick="toggleRelay(1);">Toggle
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="data-1" onclick="getRelayStatus(1);">Status</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Relay 2</th>
+                <td>
+                    <div class="btn-group-lg" role="group" aria-label="Relay 2">
+                        <button type="button" class="btn btn-success" id="on-2" onclick="setRelay(2, true);">On</button>
+                        <button type="button" class="btn btn-danger" id="off-2" onclick="setRelay(2, false);">Off
+                        </button>
+                        <button type="button" class="btn btn-info" id="toggle-2" onclick="toggleRelay(2);">Toggle
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="data-1" onclick="getRelayStatus(2);">Status</button>
+                    </div>
+                </td>
+
+            </tr>
+            <tr>
+                <th scope="row">Relay 3</th>
+                <td>
+                    <div class="btn-group-lg" role="group" aria-label="Relay 3">
+                        <button type="button" class="btn btn-success" id="on-3" onclick="setRelay(3, true);">On</button>
+                        <button type="button" class="btn btn-danger" id="off-3" onclick="setRelay(3, false);">Off
+                        </button>
+                        <button type="button" class="btn btn-info" id="toggle-3" onclick="toggleRelay(3);">Toggle
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="data-1" onclick="getRelayStatus(3);">Status</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Relay 4</th>
+                <td>
+                    <div class="btn-group-lg" role="group" aria-label="Relay 4">
+                        <button type="button" class="btn btn-success" id="on-4" onclick="setRelay(4, true);">On</button>
+                        <button type="button" class="btn btn-danger" id="off-4" onclick="setRelay(4, false);">Off
+                        </button>
+                        <button type="button" class="btn btn-info" id="toggle-4" onclick="toggleRelay(4);">Toggle
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="data-1" onclick="getRelayStatus(4);">Status</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">All</th>
+                <td>
+                    <div class="btn-group-lg" role="group" aria-label="All">
+                        <button type="button" class="btn btn-success btn-lg" id="all_on" onclick="toggleAll(true);">All
+                            On
+                        </button>
+                        <button type="button" class="btn btn-danger btn-lg" id="all_off" onclick="toggleAll(false);">All
+                            Off
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <p>Porchetta beef boudin ball tip turducken, brisket flank shank pastrami tenderloin kevin burgdoggen pork belly
-        pig. Doner picanha leberkas, strip steak prosciutto pork loin venison short ribs short loin corned beef
-        porchetta alcatra filet mignon shoulder. Shankle corned beef kielbasa salami doner flank frankfurter
-        bresaola strip steak cupim ham hock.</p>
+    <p>You should hear the relays click as they're activated; if you don't, it's probably not working.</p>
 {% endblock %}
