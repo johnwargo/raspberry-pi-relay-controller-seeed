@@ -20,39 +20,92 @@ To use this project, you'll need at a minimum the following hardware components:
  
 ## Assembly
 
+To assemble the hardware, mount the relay board on the Raspberry Pi as shown in the following figure. The relay board is designed for older Raspberry Pi's (they have less GPIO pins), so, as you can see, not all of the pins from the relay board will connect to the Raspberry Pi.  
+
 ![Assembly](screenshots/figure-02.png)
 
+To keep the boards from touching, you should use standoffs between the boards to hold them in place. The folks at Seeed Studio recommend placing a piece (or two) of electrical tape on top of the Raspberry Pi's Ethernet connector to protect the relay board from shorting out if the two boards touch there.
 
 ## Configuring Your Raspberry Pi
 
+Download the latest version of the Raspbian OS from the [Raspberry Pi web site](https://www.raspberrypi.org/downloads/raspbian/) and follow the [instructions](https://www.raspberrypi.org/documentation/installation/installing-images/README.md) for writing the OS image to a Micro SD card for the Pi. Insert the **SD card** in the Pi, connect **Ethernet**, **keyboard**, **mouse**, and a **monitor** to the Pi and finally **power it up** using a smartphone charger or some suitable power source.
+
+The relay board communicates with the Raspberry Pi using the I2C interface. This interface is disabled by default on Raspbian, so the first thing you'll want to do is open the **Raspberry Pi menu** (in the upper-left corner of the screen), select **Preferences**, then **Raspberry Pi Configuration** as shown in the following figure:
 
 ![Assembly](screenshots/figure-03.png)
 
+In the **Raspberry Pi Configuration** application, select the **Interfaces** tab and enable the I2C radio button a shown in the following figure.
+
 ![Assembly](screenshots/figure-04.png)
 
-### Validating Assembly
+Raspbian comes configured with its keyboard, timezone, and other locale settings configured for the United Kingdom (UK), so if you're in the US, or elsewhere that's not the UK, you'll want to switch over to the **localisation** tab and adjust the settings there as well.
 
-Update the JMW Article with this content: http://raspberrypi.stackexchange.com/questions/56413/error-problem-connecting-to-raspberry-pi-3-with-xrdp
+When you're done configuring I2C and the locale settings, you'll likely be prompted to reboot the Pi. Go ahead and do that before continuing. 
 
-this.
+### Validating Hardware Assembly
+
+When the Pi comes back up, open a terminal window and execute the following command:
+
+	sudo apt-get update
+
+This updates the local catalog of applications. Next, execute the following command:
+
+	sudo apt-get upgrade
+
+This command will update the Raspbian OS with all updates released after the latest image was published. The update process will take a long time, so pay attention, answer any prompts, and expect this process to take a few minutes or more (the last time I did this, it took about 15 minutes or more to complete).
+
+After the upgrade completes, in the terminal window, execute the following command:
+
+	i2cdetect -y -r 1
+
+This runs a Linux application that looks for I2C connections on the Raspberry Pi. When you run the application, you should see output similar to what's shown in the following figure:
 
 ![I2Cdetect](screenshots/figure-05.png)
 
-this. 
+In this example, it's showing that the relay board is available at I2C address 20. If you've messed with the switches on the relay board, you might see a different number in the output. If you do, make note of that number, you'll need to update the library code later to make it work with your board's configuration.
 
-![Seeed Studio Test Application](screenshots/figure-06.png)
+> **Note**: if you don't see a number in the dashed output shown in the figure, there's something wrong, the Pi doesn't see the board. At this point, I'd reach out to the folks at Seeed Studio or their community forums (not well monitored, unfortunately) for help.
 
-this.
+Now, lets download and test the library, in the terminal window, execute the following command:
 
-![Python Library test application](screenshots/figure-07.png)
+	git clone https://github.com/johnwargo/Seed-Studio-Relay-Board
+
+This will download the relay library and test application from its Github repository and copy the files to the local (relative to your terminal window) `Seed-Studio-Relay-Board` folder.
+
+> **Note**: capitalization matters in those commands, so pay close attention. Also, the Seeed in *Seeed Studio*, for some bizarre reason, has three e's in it, so make sure you've typed enough e's.
+
+Next, change to the folder you just created by executing the following command:
+
+	cd Seed-Studio-Relay-Board
+
+Your terminal window prompt should change to reflect the switch to the new folder.
+
+If your relay board's I2C address is different than `20`, open the `relay_lib_seeed.py` file, and look for the following two lines:
+
+	# Change the following value if your Relay board uses a different I2C address. 
+	DEVICE_ADDRESS = 0x20  # 7 bit address (will be left shifted to add the read write bit)
+
+Change the `0x20` in the line to the appropriate value for your configuration, replacing only the `20` with the address for your board.
+
+Now, finally, execute the following command:
+
+	python ./relay_lib_seeed_test.py
+
+This executes the relay library's test application, if everything is working correctly, it will turn all of the relays on for a second, turn them all off for a second, then toggle each relay in succession on and off until you press the **ctrl**+**C** keys to make it stop. When the application runs, you should see something similar to the following in the terminal window: 
+
+![Python Library test application](screenshots/figure-06.png)
+
+At this point, you should have a functional relay board configuration and know with certainty that the relay library works. 
 
 ## Software Installation
+
+
+![](screenshots/figure-07.png)
 
 
 ## Resources
 
 Links to the wiki page and my article and sample code
-
 
 ## Update History
 
