@@ -177,7 +177,7 @@ If you don't already have a terminal window open, open one then navigate to the 
 
 3.	Add the following line to the end (bottom) of the file:
 
-		@lxterminal -e /home/pi/Seed-Studio-Relay-Board/start-server.sh
+		@lxterminal -e /home/pi/Raspberry-Pi-Relay-Controller-Seeed/start-server.sh
 
 	To save your changes, press `ctrl-o` then press the Enter key. Next, press `ctrl-x` to exit the `nano` application.
   
