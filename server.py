@@ -2,13 +2,10 @@
 # todo: use web sockets to update the status display when the relay status changes
 from __future__ import print_function
 
-from datetime import datetime
-
 from flask import Flask
 from flask import make_response
 from flask import render_template
 from flask_bootstrap import Bootstrap
-from flask_moment import Moment
 
 from relay_lib_seeed import *
 
@@ -20,14 +17,18 @@ NUM_RELAY_PORTS = 4
 app = Flask(__name__)
 
 bootstrap = Bootstrap(app)
-moment = Moment(app)
+
+# turn all of the relays off, so we're starting with a clean slate. Since the library can determine
+# relay status by querying the board, there's no real, burning need for this, but it seemed
+# like the right thing to do.
+relay_all_off()
 
 
 @app.route('/')
 def index():
     print("Loading app Main page")
     # return success_resp
-    return render_template('index.html', current_time=datetime.utcnow())
+    return render_template('index.html')
 
 
 @app.route('/status/<int:relay>')
@@ -101,3 +102,10 @@ def internal_server_error(e):
 def validate_relay(relay):
     # Make sure the port falls between 1 and NUM_RELAY_PORTS
     return (relay > 0) and (relay <= NUM_RELAY_PORTS)
+
+
+if __name__ == "__main__":
+    # On the Pi, you need to run the app using this command to make sure it
+    # listens for requests outside of the device.
+    # app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=5000, debug=True)

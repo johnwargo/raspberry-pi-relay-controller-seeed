@@ -24,10 +24,17 @@ function callApiWithRelay(url, relay) {
     }
 }
 
-function toggleAll(status) {
-    console.log("Executing toggleAll");
+function setAll(status) {
+    console.log("Executing setAll");
     var url = status ? 'all_on/' : 'all_off/';
     callApi(url);
+}
+
+function toggleAll() {
+    console.log("Executing toggleAll");
+    for (var i = 1; i < 5; i++) {
+        toggleRelay(i);
+    }
 }
 
 function callApi(url) {
