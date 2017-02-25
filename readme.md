@@ -161,9 +161,9 @@ Now, when you start tapping buttons in the application, you can roam around the 
 
 > **Note**: The web application will only be accessible to devices that are on the same network as the Raspberry Pi. There are some cool things you can do to expose this functionality to computer systems outside of your home network, but it's waaaaaay beyond the scope of this readme to cover that topic.
 
-## Starting The Project's Application's Automatically
+## Starting The Controller Server Process Automatically
 
-Ok, so right now, the server is only running because you started it manually. There are a few steps you must complete to configure the Raspberry Pi so it executes the the relay controller app on startup. You can read more about this here: [Autostart Python App on Raspberry Pi in a Terminal Window](http://johnwargo.com/index.php/microcontrollers-single-board-computers/autostart-python-app-on-raspberry-pi-in-a-terminal-window.html).
+Right now, the server is only running because you started it manually. There are a few steps you must complete to configure the Raspberry Pi so it executes the the relay controller app on startup. You can read more about this here: [Autostart Python App on Raspberry Pi in a Terminal Window](http://johnwargo.com/index.php/microcontrollers-single-board-computers/autostart-python-app-on-raspberry-pi-in-a-terminal-window.html).
 
 If you don't already have a terminal window open, open one then navigate to the folder where you extracted the project files (if you followed these instructions, it should be at `home/pi/Seed-Studio-Relay-Board`. 
 
