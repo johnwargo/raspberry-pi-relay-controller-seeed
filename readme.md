@@ -99,9 +99,9 @@ At this point, you should have a functional relay board configuration and know w
 
 ## Software Installation
 
-The controller's Flask application uses the Flask Bootstrap plugin to serve [Bootstrap](http://getbootstrap.com/) applications, so in the terminal window, install the plugin by executing the following command:  
+The controller's Flask application uses Flask and the Flask Bootstrap plugin to serve [Bootstrap](http://getbootstrap.com/) applications, so in the terminal window, install the plugin by executing the following command:  
 
-	sudo pip install flask_bootstrap
+	sudo pip install flask flask_bootstrap
 
 Finally, clone the controller application to your local system. Assuming your terminal window is currently pointing to the `Seed-Studio-Relay-Board` folder, navigate back to the `pi` user's home folder and clone the repository by executing the following commands:
 
@@ -185,7 +185,9 @@ If you don't already have a terminal window open, open one then navigate to the 
 
 ## Resources
 
-Links to the wiki page and my article and sample code
++	[Using the Seeed Studio Raspberry Pi Relay board](http://johnwargo.com/microcontrollers-single-board-computers/using-the-seeed-studio-raspberry-pi-relay-board.html) - this is my original article about how to get the board up and running.
++	[Seeed Studio Raspberry Pi Relay Board v1.0 Wiki Page](http://wiki.seeed.cc/Raspberry_Pi_Relay_Board_v1.0/) - Notice that Seeed copied over much of the information from my article.
++ My [Seed Studio Relay Board Github Repository](https://github.com/johnwargo/Seed-Studio-Relay-Board) - this repository hosts the original Seeed Studio python library for the board as well as my enhanced library and test application.
 
 ## Update History
 
