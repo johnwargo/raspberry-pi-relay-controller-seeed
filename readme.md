@@ -99,9 +99,89 @@ At this point, you should have a functional relay board configuration and know w
 
 ## Software Installation
 
+The controller's Flask application uses the Flask Bootstrap plugin to serve [Bootstrap](http://getbootstrap.com/) applications, so in the terminal window, install the plugin by executing the following command:  
 
-![](screenshots/figure-07.png)
+	sudo pip install flask_bootstrap
 
+Finally, clone the controller application to your local system. Assuming your terminal window is currently pointing to the `Seed-Studio-Relay-Board` folder, navigate back to the `pi` user's home folder and clone the repository by executing the following commands:
+
+	cd .. 
+	git clone https://github.com/johnwargo/Raspberry-Pi-Relay-Controller-Seeed
+	cd Raspberry-Pi-Relay-Controller-Seeed
+
+Your terminal window should look something like this:
+ 
+![Cloning the controller project](screenshots/figure-07.png)
+
+Now, let start the server application. In the terminal window pointing to the `Raspberry-Pi-Relay-Controller-Seeed` folder (you changed to this folder with the last command you typed), execute the following command:
+
+	python ./server.py
+
+The application will launch and tell you that it's running on http://0.0.0.0:5000 as shown in the following figure. This may seem weird, as that's not a valid IP address, but I had to configure the server application to load with that address to get it to listen to requests from external to the Raspberry Pi. You'll see how this works in a minute.    
+
+![Starting the controler application](screenshots/figure-08.png)
+
+## Accessing the Web Application
+
+To access the web application on the Raspberry Pi, open the Pi's browser and type the following address in the browser's address bar:
+
+	http://127.0.0.1:5000
+
+That's the default address for `localhost` which means the local system you're running on. The `:5000` tells the browser what port the target application is running on. When you press **Enter**, the browser should open the web application shown in the following figure. Click some of the buttons, and you should hear the relay board click in response (as relays close and open) and the LEDs on the board should illuminate when each relay is on.
+
+![Web Application](screenshots/figure-01.png)
+
+If the application doesn't appear as expected, I'm  not sure what to tell you. Go back over the previous steps and check to see that everything is as described in this document.
+
+> **Note**: The `localhost` address (`127.0.0.1) is not visible to any computer systems external to the system, only applications running on the system can access local server resources using that address. Do not fire up the browser on your desktop PC or your smartphone and try to access the server using that address. It will not work.
+
+In order to be able to access this web application from a different computer, you need to know the Raspberry Pi's Internet Protocol (IP) address. To get this address, open a new terminal window (the terminal widow you already have is busy running the server application) and execute the following command:
+
+	ifconfig
+
+An application will run and dump all of the network interface information to the terminal window as shown in the following figure. Look for the Pi's `inet addr` value highlighted in red in the figure; the value after the colon (:) is the Pi's IP address.
+
+> **Note**: In the figure, `eth0` refers to Ethernet port 0 (the Pi only has one) and indicates that I'm connected to the network using a Ethernet cable (not wireless). If your Raspberry Pi is using a wireless network (Wi-Fi), then look for the IP address in the `wlan0` entry shown at the bottom of the data.
+
+![Linux ifconfig command output](screenshots/figure-09.png)
+
+With that IP address in hand, fire up your desktop, smartphone or tablet browser and use the address in the following format:
+
+	http://ip_address:port
+
+So, for my example shown above, with an IP address of `196.168.1.214` and we already know the server application is listening on port `5000`, the server address would be:
+
+	http://192.168.1.214:5000
+
+When you type this in and press enter (or tap go), the web application should open as shown in the following figure. In this example, the web application is running on a Nexus 7 tablet.
+
+![Linux ifconfig command output](screenshots/figure-10.png)
+
+Now, when you start tapping buttons in the application, you can roam around the room or house as you do it.
+
+> **Note**: The web application will only be accessible to devices that are on the same network as the Raspberry Pi. There are some cool things you can do to expose this functionality to computer systems outside of your home network, but it's waaaaaay beyond the scope of this readme to cover that topic.
+
+## Starting The Project's Application's Automatically
+
+Ok, so right now, the server is only running because you started it manually. There are a few steps you must complete to configure the Raspberry Pi so it executes the the relay controller app on startup. You can read more about this here: [Autostart Python App on Raspberry Pi in a Terminal Window](http://johnwargo.com/index.php/microcontrollers-single-board-computers/autostart-python-app-on-raspberry-pi-in-a-terminal-window.html).
+
+If you don't already have a terminal window open, open one then navigate to the folder where you extracted the project files (if you followed these instructions, it should be at `home/pi/Seed-Studio-Relay-Board`. 
+
+1.	Make the project's bash script file (`start-server.sh`) executable by executing the following command:
+
+    	chmod +x start-server.sh
+    
+2.	Open the pi user's session autostart file using the following command:  
+
+		sudo nano ~/.config/lxsession/LXDE-pi/autostart    
+
+3.	Add the following line to the end (bottom) of the file:
+
+		@lxterminal -e /home/pi/Seed-Studio-Relay-Board/start-server.sh
+
+	To save your changes, press `ctrl-o` then press the Enter key. Next, press `ctrl-x` to exit the `nano` application.
+  
+4.	Reboot the Raspberry Pi; when it restarts, the controller server process should execute in its own terminal window.
 
 ## Resources
 
