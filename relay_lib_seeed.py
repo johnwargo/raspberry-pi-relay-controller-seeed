@@ -1,3 +1,4 @@
+"""A module for interacting with the Seeed Studio Relay board for the Raspberry Pi."""
 # =========================================================
 # Seeed Studio Raspberry Pi Relay Board Library
 #
@@ -26,6 +27,13 @@ bus = smbus.SMBus(1)  # 0 = /dev/i2c-0 (port I2C0), 1 = /dev/i2c-1 (port I2C1)
 
 
 def relay_on(relay_num):
+    """Turn the specified relay (by relay #) on.
+
+    Call this function to turn a single relay on.
+    
+    Args:
+        relay_num (int): The relay number that you want turned on.        
+    """
     global DEVICE_ADDRESS
     global DEVICE_REG_DATA
     global DEVICE_REG_MODE1
@@ -43,6 +51,13 @@ def relay_on(relay_num):
 
 
 def relay_off(relay_num):
+    """Turn the specified relay (by relay #) off.
+
+    Call this function to turn a single relay off.
+    
+    Args:
+        relay_num (int): The relay number that you want turned off.
+    """
     global DEVICE_ADDRESS
     global DEVICE_REG_DATA
     global DEVICE_REG_MODE1
@@ -60,6 +75,10 @@ def relay_off(relay_num):
 
 
 def relay_all_on():
+    """Turn all of the relays on.
+
+    Call this function to turn all of the relays on.        
+    """
     global DEVICE_ADDRESS
     global DEVICE_REG_DATA
     global DEVICE_REG_MODE1
@@ -70,6 +89,10 @@ def relay_all_on():
 
 
 def relay_all_off():
+    """Turn all of the relays on.
+
+    Call this function to turn all of the relays on.        
+    """
     global DEVICE_ADDRESS
     global DEVICE_REG_DATA
     global DEVICE_REG_MODE1
@@ -80,6 +103,13 @@ def relay_all_off():
 
 
 def relay_toggle_port(relay_num):
+    """Toggle the specified relay (on to off, or off to on).
+
+    Call this function to toggle the status of a specific relay.
+    
+    Args:
+        relay_num (int): The relay number to toggle.
+    """
     print('Toggling relay:', relay_num)
     if relay_get_port_status(relay_num):
         # it's on, so turn it off
@@ -90,6 +120,13 @@ def relay_toggle_port(relay_num):
 
 
 def relay_get_port_status(relay_num):
+    """Returns the status of the specified relay (True for on, False for off)
+  
+    Call this function to retrieve the status of a specific relay.
+      
+    Args:
+        relay_num (int): The relay number to query.
+    """
     # determines whether the specified port is ON/OFF
     global DEVICE_REG_DATA
     print('Checking status of relay', relay_num)
@@ -106,6 +143,11 @@ def relay_get_port_status(relay_num):
 
 
 def relay_get_port_data(relay_num):
+    """Internal function, used to retrieve binary data from the relay board.
+        
+    Args:
+        relay_num (int): The relay port to query.
+    """
     # gets the current byte value stored in the relay board
     global DEVICE_REG_DATA
     print('Reading relay status value for relay', relay_num)
